@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function solve {
+  echo "    timeAndPrintSolution(\"$1\", P$1 _)"
+}
+
+numbers=()
+
+echo "object AdventOfCode {"
+
+while IFS='' read -r line || [[ -n "$line" ]]; do
+  echo "  $line"
+done < Library.scala
+echo ""
+
+for f in *.scala
+do
+  if [ "$f" != "Library.scala" -a "$f" != "AdventOfCode.scala" ]; then
+    n="${f%.*}"
+    numbers+=($n)
+    echo "  def P"$n"() = {"
+
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+      echo "    $line"
+    done < $f
+    echo "  }"
+    echo ""
+  fi
+done
+
+echo "  def main(args: Array[String]): Unit = {"
+if [ "$1" != "" ]; then
+  solve $1
+else
+  for n in "${numbers[@]}"
+  do
+    solve $n
+  done
+fi
+echo "  }"
+echo "}"

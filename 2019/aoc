@@ -1,0 +1,7 @@
+#!/bin/bash
+
+tmpfile=AdventOfCode.scala
+
+./gensource $1 > "$tmpfile"
+
+scala -deprecation $tmpfile
